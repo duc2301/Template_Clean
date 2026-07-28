@@ -7,7 +7,6 @@ namespace Application.DTOs.RequestDTOs
 {
     public class ProductRequestDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public int stock { get; set; }

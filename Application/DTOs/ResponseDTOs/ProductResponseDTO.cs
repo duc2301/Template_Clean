@@ -10,6 +10,7 @@ namespace Application.DTOs.ResponseDTOs
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+        public string CategoryName { get; set; }
         public int stock { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
     }

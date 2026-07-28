@@ -36,6 +36,24 @@ namespace Application.Services
             await _unitOfWork.SaveChangesAsync();            
         }
 
+        public async Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync(int Pageindex, int PageSize)
+        {
+            var totalCountList = await _unitOfWork.Repository<Product>()
+            .GetAsync(query => query.Where(p => p.isActive == true));
+
+            int totalCount = totalCountList.Count(); 
+
+            var list = await _unitOfWork.Repository<Product>()
+                .GetAsync(query => query                
+                .Where(p => p.isActive == true)
+                .OrderByDescending(p => p.CreateAt)
+                .Skip((Pageindex - 1) * PageSize)
+                .Take(PageSize)
+                );
+
+            return _mapper.Map<IEnumerable<ProductResponseDTO>>(list);
+        }
+
         public async Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync()
         {
             var list = await _unitOfWork.Repository<Product>().GetAllAsync();

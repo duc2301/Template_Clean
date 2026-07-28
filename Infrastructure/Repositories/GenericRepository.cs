@@ -85,5 +85,17 @@ namespace Infrastructure.Repositories
             if (entity != null)
                 _context.Set<T>().Remove(entity);
         }
+
+        public async Task<List<T>> GetAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder = null)
+        {
+            IQueryable<T> query = _context.Set<T>().AsNoTracking();
+
+            if (queryBuilder != null)
+            {
+                query = queryBuilder(query);
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }
