@@ -5,7 +5,7 @@ namespace Application.Interfaces.IServices
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync(int Pageindex, int PageSize);
+        Task<(IEnumerable<ProductResponseDTO>, int totalCount)> GetAllProductsAsync(int Pageindex, int PageSize);
         Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync();
         Task<ProductResponseDTO> GetProductByIdAsync(int productId);
         Task<ProductResponseDTO> CreateProductAsync(ProductRequestDTO productDto);

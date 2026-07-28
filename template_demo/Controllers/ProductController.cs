@@ -20,8 +20,8 @@ namespace template_demo.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProduct(int pageIndex, int pageSize)
         {
-            var list = await _productService.GetAllProductsAsync(pageIndex, pageSize);
-            var pagedData = new PagedResult<ProductResponseDTO>(list, list.Count(), pageIndex, pageSize);
+            var (list, totalCount) = await _productService.GetAllProductsAsync(pageIndex, pageSize);
+            var pagedData = new PagedResult<ProductResponseDTO>(list, totalCount, pageIndex, pageSize);
             return Ok(ApiResponse.Success("Danh sach san pham", pagedData));
         }
 

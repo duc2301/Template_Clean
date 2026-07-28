@@ -36,7 +36,7 @@ namespace Application.Services
             await _unitOfWork.SaveChangesAsync();            
         }
 
-        public async Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync(int Pageindex, int PageSize)
+        public async Task<(IEnumerable<ProductResponseDTO>, int totalCount)> GetAllProductsAsync(int Pageindex, int PageSize)
         {
             var totalCountList = await _unitOfWork.Repository<Product>()
             .GetAsync(query => query.Where(p => p.isActive == true));
@@ -51,7 +51,7 @@ namespace Application.Services
                 .Take(PageSize)
                 );
 
-            return _mapper.Map<IEnumerable<ProductResponseDTO>>(list);
+            return (_mapper.Map<IEnumerable<ProductResponseDTO>>(list), totalCount);
         }
 
         public async Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync()
