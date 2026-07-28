@@ -42,6 +42,13 @@ namespace Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
+        public async Task<int> CountAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder = null)
+        {
+            IQueryable<T> query = _context.Set<T>();
+            if (queryBuilder != null) query = queryBuilder(query);
+            return await query.CountAsync();
+        }
+
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "")
         {
             IQueryable<T> query = _context.Set<T>().Where(predicate);

@@ -37,11 +37,8 @@ namespace Application.Services
         }
 
         public async Task<(IEnumerable<ProductResponseDTO>, int totalCount)> GetAllProductsAsync(int Pageindex, int PageSize)
-        {
-            var totalCountList = await _unitOfWork.Repository<Product>()
-            .GetAsync(query => query.Where(p => p.isActive == true));
-
-            int totalCount = totalCountList.Count(); 
+        {           
+            int totalCount =  await _unitOfWork.Repository<Product>().CountAsync(q => q.Where(p => p.isActive));
 
             var list = await _unitOfWork.Repository<Product>()
                 .GetAsync(query => query                
